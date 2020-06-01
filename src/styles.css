@@ -92,3 +92,11 @@
   filter: drop-shadow(4px 4px 6px gray); 
   transform: scale(1.1); 
 } 
+
+.dropzone {
+  text-align: center;
+  padding: 20px;
+  border: 3px dashed #eeeeee;
+  background-color: #fafafa;
+  color: #bdbdbd;
+}

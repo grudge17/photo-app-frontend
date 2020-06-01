@@ -6,6 +6,8 @@ import Home from './core/Home'
 import PrivateRoute from './auth/PrivateRoute'
 import Dashboard from './user/UserDashboard'
 import AddPhoto from './user/AddPhoto'
+import Profile from './user/Profile'
+
 
 
 const Routes=()=>{
@@ -23,6 +25,10 @@ const Routes=()=>{
         <Route 
         path='/upload'
         exact component={AddPhoto} 
+        />
+         <Route 
+        path='/profile/:userId'
+        exact component={Profile} 
         />
             
         </Switch>

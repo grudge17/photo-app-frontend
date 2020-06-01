@@ -3,6 +3,8 @@ import Layout from '../core/Layout'
 import {isAuthenticated} from '../auth'
 import{Link} from 'react-router-dom'
 import {addPic} from '../auth/index'
+import Dropzone from "react-dropzone";
+import "../styles.css"
 
 const AddPhoto=()=>{
     const [values, setValues] = useState({
@@ -29,6 +31,10 @@ const AddPhoto=()=>{
         //redirectToProfile: false,
         formData
     }=values;
+
+
+
+
     const { user, token } = isAuthenticated();
 
     useEffect(() => {  // this is used to grab the details from the browser
@@ -41,6 +47,7 @@ const AddPhoto=()=>{
         formData.set(name, value);
         setValues({ ...values, [name]: value });
     };
+
 
 
     const clickSubmit = event => {
@@ -63,10 +70,11 @@ const AddPhoto=()=>{
             }
         });
     };
-
-
+    
+      
 
     const newPostForm = () => (
+        
         <form className="mb-3" onSubmit={clickSubmit}>
             <h4>Post Photo</h4>
             <div className="form-group">
@@ -74,7 +82,7 @@ const AddPhoto=()=>{
                     <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
                 </label>
             </div>
-
+            
             <div className="form-group">
                 <label className="text-muted">Title</label>
                 <input onChange={handleChange('title')} type="text" className="form-control" value={title} />
@@ -98,6 +106,10 @@ const AddPhoto=()=>{
             <button className="btn btn-outline-primary">Add Image</button>
         </form>
     );
+
+
+   
+
 
     const showError = () => (
         <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
@@ -129,7 +141,18 @@ const AddPhoto=()=>{
                 </div>
             </div>
         </Layout>
-    );
-};
+    )
+}
+    
 
 export default AddPhoto;
+
+
+
+
+
+
+
+
+
+
