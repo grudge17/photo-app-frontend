@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "10.13.0"
+    "node": "10.13.x"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -22,7 +22,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
