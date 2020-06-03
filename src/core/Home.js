@@ -95,7 +95,7 @@ const Home=()=>{
         <div className="row">
         {imagesByLimit.map((item) =>(
             <div className="column mr-4 ml-2">
-             <Suspense fallback={<img src='C:\Users\hp\Desktop\ecomm images\react\react.jpg' alt='Avatar'style={{width:'50%'}}/>}>
+             <Suspense fallback={<img src="%PUBLIC_URL%/favicon.ico" alt='Avatar'style={{width:'50%'}}/>}>
             <Card image={item}/>
             </Suspense>
             </div>
