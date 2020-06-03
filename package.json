@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "10.13.x"
+    "node": "10.13.0"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -25,8 +25,8 @@
     "start": "node server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "eject": "react-scripts eject"
+    
 
   },
   "eslintConfig": {
