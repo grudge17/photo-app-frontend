@@ -16,8 +16,8 @@ const Card = ({
       <div className="card-body">
         {/* {shouldRedirect(redirect)} */}
         <ShowImage  item={image} url="image" />
-        <p className="card-p  mt-2">{image.description.substring(0, 100)} </p>
-        <p className="card-p black-10">#{image.tags}</p>
+        <p className="card-p mt-2 black-10">{image.description.substring(0, 100)} </p>
+        <p className="card-p black-9">#{image.tags}</p>
         <p className="black-8">Added on {moment(image.createdAt).fromNow()}</p>
         
       </div>
