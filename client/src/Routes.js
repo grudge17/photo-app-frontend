@@ -30,6 +30,7 @@ const Routes=()=>{
         path='/profile/:userId'
         exact component={Profile} 
         />
+       
             
         </Switch>
     </BrowserRouter>)

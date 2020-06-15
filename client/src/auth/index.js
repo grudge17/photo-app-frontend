@@ -68,14 +68,34 @@ export const isAuthenticated=()=>{
 
 }
 
+// export const addPic=(userId,token,image)=>{
+//     return fetch(`${API}/image/upload/${userId}`,{
+//         method:'POST',
+//         headers:{
+//             Accept:'application/json',
+//             Authorization:`Bearer ${token}`
+//         },
+//         body:image
+//     })
+//     .then(response=>{
+//         return response.json()
+//     })
+//     .catch(err=>{
+//         console.log(err)
+//     })
+// }
+
 export const addPic=(userId,token,image)=>{
+    const formData = new FormData();
+    formData.append("file", image);
+    
     return fetch(`${API}/image/upload/${userId}`,{
         method:'POST',
         headers:{
             Accept:'application/json',
             Authorization:`Bearer ${token}`
         },
-        body:image
+        body:formData
     })
     .then(response=>{
         return response.json()

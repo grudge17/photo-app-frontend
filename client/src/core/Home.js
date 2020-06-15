@@ -1,21 +1,35 @@
 import React,{useState,useEffect,Suspense} from 'react'//for state object as ith grabs value from form
 import Layout from './Layout'
-import {Link} from 'react-router-dom'
 import {getImages} from './apiCore'
-import "../styles.css"
-import ShowImage from './ShowImage';
-import {API} from '../config'
+import "../styles.css";
+import SlideShow from './SlideShow'   
+import {API} from '../config';
+import {
+    Button,
+    Dialog,
+    DialogContent,
+    DialogActions
+  } from "@material-ui/core"
+  import useGlobal from "../store";
 const Card = React.lazy(()=> import('./Card'))
 
 const Home=()=>{
-    const {user, token}=useState([])
     const [imagesByLimit,setImagesByLimit]=useState([])
     const [imagesByDate,setImagesByDate]=useState([])
     const [error,setError]=useState(false)
-    const { isOpen,setIsOpen } = useState(false)
+    
+    const [open, handleOpen] = useGlobal(
+        state => state.open,
+        actions => actions.handleOpen
+      );
+      const [globalState, globalActions] = useGlobal();
 
+    useEffect(()=>{
+        console.log(open)
+    },[open]) 
+    
     const [isFetching, setIsFetching] = useState(false);
-    const[page, setPage]=useState(30);
+    const[page, setPage]=useState(0);
 
     useEffect(()=>{
         fetchData();
@@ -23,12 +37,11 @@ const Home=()=>{
     
 
     const handleScroll = () =>{
-        if(Math.ceil(window.innerHeight + document.documentElement.scrollTop) !== document.documentElement.offsetHeight
+        if(Math.ceil(window.innerHeight + document.documentElement.scrollTop) < document.documentElement.offsetHeight
         || isFetching) 
             return;
         setIsFetching(true)
     }
-
 
     const loadImagesByDate=()=>{
         getImages('createdAt').then(data=>{
@@ -40,68 +53,63 @@ const Home=()=>{
         })
       }
 
-      const fetchData =()=>{
-          
-            setPage(page+30);
-            loadImagesByLimit(page)
+      const fetchData = async ()=>{
+         
+            //setPage(page+30);
+            var imageList = await loadImagesByLimit(page)
+            setPage(page+30)
           //  const data= await result.json()
+            var list=imagesByLimit.concat(imageList)
+                setImagesByLimit(list)
            
          
       }
       useEffect(()=>{
           if(!isFetching)return;
           fetchMoreListItems();
-      }, [isFetching])
+    
+      }, [[isFetching]])
 
       const fetchMoreListItems=()=>{
           fetchData();
           setIsFetching(false)
       }
-      const loadImagesByLimit=(limit)=>{
-        getImages('createdAt',limit).then(data=>{
-            if(data.error){
-                setError(data.error)
-            }else{
-                setImagesByLimit(data)
-            }
-        })
+      const loadImagesByLimit= async(offset)=>{
+       var data = await getImages('createdAt',offset)
+       return data
       }
 
-    //   useEffect(()=>{
-    //     loadImagesByDate()
-    //     loadImagesByLimit()
-    // },[])
-
-
-    
-        
-     
-
     return( //fvfvfvfvfv
-    <Layout title="Home Page" description="Node React Photo App" className="container-fluid">
-        {/* <button class="button button2"> <Link to='/upload'><font color="white"> Upload</font> </Link> </button> */}
         
-   {/* <div>
-
-        {imagesByLimit.map((image,i)=>(
-              
-        <a class="example-image-link mr-4" href={`${API}/image/photo/${image._id}`}  
-        data-lightbox="roadtrip" >
-            <img class="example-image" src={`${API}/image/photo/${image._id}`}  alt=""/></a>
-        ))}
-        </div>  */}
-
+    <Layout title="Home Page" description="Node React Photo App" className="container-fluid">
         
         <div className="row">
         {imagesByLimit.map((item) =>(
             <div className="column mr-4 ml-2">
-             <Suspense fallback={<img src="%PUBLIC_URL%/favicon.ico" alt='Avatar'style={{width:'50%'}}/>}>
-            <Card image={item}/>
+             <Suspense fallback={<img src="%PUBLIC_URL%/favicon.ico"  alt='Avatar'style={{width:'50%'}}/>}>
+            <Card image={item} />
             </Suspense>
             </div>
         ))}
         {isFetching && <h1>Fetching for more list items</h1>}
       </div>  
+      <div>
+      <Dialog fullWidth={true}
+maxWidth = {'md'} open={globalState.open} aria-labelledby="form-dialog-title">
+    <DialogContent>
+    
+    <SlideShow imageList={imagesByLimit}/>
+    </DialogContent>
+    <DialogActions>
+      <Button  onClick={() => 
+      {
+        globalActions.handleOpen();
+            }} color="primary">
+        Close
+      </Button>
+    </DialogActions>
+  </Dialog> 
+  </div>
        
 </Layout>
  
