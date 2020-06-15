@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import {API} from '../config'
 
   import useGlobal from "../store";
 
@@ -31,7 +32,7 @@ return(
         style={{ display: globalState.itemId === image._id? 'block': 'none'}}>
         <div class="text">{image.createdBy}</div>
             <img 
-                src={`http://localhost:8000/image/photo/${image._id}?renditionType=720p`}
+                src={`${API}/image/photo/${image._id}?renditionType=720p`}
                 alt='no image'
                 className="mb-3"
                 style={{width:"100%"}}
